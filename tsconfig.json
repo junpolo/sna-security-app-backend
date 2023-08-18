@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "ES2020",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "checkJs": false,
+    "noEmitHelpers": false,
+    "noEmitOnError": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "lib": ["ESNext", "dom", "ES2015.Iterable"],
+    "baseUrl": ".",
+    "paths": {}
+  },
+  "exclude": ["node_modules", "platforms", "**/*.aot.ts"]
+}
