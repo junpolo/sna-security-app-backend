@@ -1,4 +1,6 @@
 import * as express from "express";
+import * as cors from "cors";
+
 import { Express, Router, Request, Response } from "express";
 
 import { getUsers, getUserById } from "./app/user/controller";

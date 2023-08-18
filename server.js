@@ -6,6 +6,6 @@ var app = express();
 var port = 8080;
 var router = express.Router();
 router.get("/users", controller_1.getUsers);
-router.get("/users/:id", controller_1.getUser);
+router.get("/users/:id", controller_1.getUserById);
 app.use("/api", router);
 app.listen(port);

@@ -9,6 +9,7 @@ const MOCK_USERS: Array<IUser> = [
 ];
 
 export function getUsers(request: Request, response: Response) {
+  response.setHeader("Access-Control-Allow-Origin", "*");
   return response.json({ users: MOCK_USERS });
 }
 
