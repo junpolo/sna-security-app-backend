@@ -1,9 +1,11 @@
-import express from "express";
-const app = express();
-const port = 8080;
-const router = express.Router();
-router.get("/", (request, response) => {
-    response.json({ message: "Yespls" });
-});
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var express = require("express");
+var controller_1 = require("./app/user/controller");
+var app = express();
+var port = 8080;
+var router = express.Router();
+router.get("/users", controller_1.getUsers);
+router.get("/users/:id", controller_1.getUser);
 app.use("/api", router);
 app.listen(port);
