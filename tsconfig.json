@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
-    "module": "esnext",
-    "target": "ES2020",
+    "module": "CommonJS",
+    "target": "ES5",
+    "moduleResolution": "node",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "checkJs": false,
@@ -9,7 +10,6 @@
     "noEmitOnError": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
-    "lib": ["ESNext", "dom", "ES2015.Iterable"],
     "baseUrl": ".",
     "paths": {}
   },
