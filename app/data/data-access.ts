@@ -1,4 +1,4 @@
-import { newGuid } from "@utils";
+import { newGuid } from "../shared/utils";
 import { User, UserAuthentication } from "app/user/interfaces/user.interface";
 
 import * as fs from "fs";
@@ -24,7 +24,10 @@ export function createUser(user: UserAuthentication): void {
   const users = getUsers();
 
   const newId = newGuid();
-  users.push({ ...user, id: newId });
+  users.push({ id: newId, ...user });
+
+  const newUsers = JSON.stringify({ users });
+  fs.writeFileSync(USERS_FILE, newUsers);
 }
 
 export function getUser(email: string): User {

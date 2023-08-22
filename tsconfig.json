@@ -11,9 +11,7 @@
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
-    "paths": {
-      "@utils": ["app/shared/utils"]
-    }
+    "paths": {}
   },
   "exclude": ["node_modules", "platforms", "**/*.aot.ts"]
 }

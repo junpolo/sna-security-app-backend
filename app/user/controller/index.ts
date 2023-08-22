@@ -1,6 +1,7 @@
 import { Express, Router, Request, Response } from "express";
 
-import { User } from "../interfaces/user.interface";
+import { User, CreateUserPayload } from "../interfaces/user.interface";
+import { createUser } from "../../data/data-access";
 
 const MOCK_USERS: Array<User> = [
   { id: 1, email: "ahmed@domain.com", password: "123" },
@@ -27,6 +28,15 @@ export function getUserById(request: Request, response: Response) {
 }
 
 export function registerUser(request: Request, response: Response) {
+  const { email, password } = request.body as CreateUserPayload;
+
+  const userData: Omit<User, "id"> = {
+    email,
+    password,
+  };
+
+  createUser(userData);
+
   return response.json({ message: "User created!" });
 }
 
