@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUserById = exports.getUsers = void 0;
+exports.login = exports.registerUser = exports.getUserById = exports.getUsers = void 0;
 var MOCK_USERS = [
     { id: 1, name: "Ahmed Singh" },
     { id: 2, name: "Khadaffy Janjalani" },
@@ -16,3 +16,11 @@ function getUserById(request, response) {
     return response.json({ user: user });
 }
 exports.getUserById = getUserById;
+function registerUser(request, response) {
+    return response.json({ message: "User created!" });
+}
+exports.registerUser = registerUser;
+function login(request, response) {
+    return response.json({ message: "User logged in!" });
+}
+exports.login = login;

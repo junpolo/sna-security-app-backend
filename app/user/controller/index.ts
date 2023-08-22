@@ -17,3 +17,11 @@ export function getUserById(request: Request, response: Response) {
   const user = MOCK_USERS.find((u) => u.id === +request.params.id);
   return response.json({ user });
 }
+
+export function registerUser(request: Request, response: Response) {
+  return response.json({ message: "User created!" });
+}
+
+export function login(request: Request, response: Response) {
+  return response.json({ message: "User logged in!" });
+}
