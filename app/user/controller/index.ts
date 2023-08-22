@@ -2,6 +2,7 @@ import { Express, Router, Request, Response } from "express";
 
 import { User, CreateUserPayload } from "../interfaces/user.interface";
 import { createUser } from "../../data/data-access";
+import { validateSignup } from "../validations/auth.validation";
 
 const MOCK_USERS: Array<User> = [
   { id: 1, email: "ahmed@domain.com", password: "123" },
@@ -35,8 +36,12 @@ export function registerUser(request: Request, response: Response) {
     password,
   };
 
-  createUser(userData);
+  const validationStatus = validateSignup(userData);
+  if (validationStatus !== true) {
+    return response.status(400).send({ ...validationStatus });
+  }
 
+  createUser(userData);
   return response.json({ message: "User created!" });
 }
 

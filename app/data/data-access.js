@@ -31,7 +31,7 @@ exports.getUsers = getUsers;
 function createUser(user) {
     var users = getUsers();
     var newId = (0, utils_1.newGuid)();
-    users.push(__assign(__assign({}, user), { id: newId }));
+    users.push(__assign({ id: newId }, user));
     var newUsers = JSON.stringify({ users: users });
     fs.writeFileSync(USERS_FILE, newUsers);
 }

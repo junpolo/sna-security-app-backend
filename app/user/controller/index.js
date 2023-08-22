@@ -1,7 +1,19 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.login = exports.registerUser = exports.getUserById = exports.getUsers = void 0;
 var data_access_1 = require("../../data/data-access");
+var auth_validation_1 = require("../validations/auth.validation");
 var MOCK_USERS = [
     { id: 1, email: "ahmed@domain.com", password: "123" },
     {
@@ -31,6 +43,10 @@ function registerUser(request, response) {
         email: email,
         password: password,
     };
+    var validationStatus = (0, auth_validation_1.validateSignup)(userData);
+    if (validationStatus !== true) {
+        return response.status(400).send(__assign({}, validationStatus));
+    }
     (0, data_access_1.createUser)(userData);
     return response.json({ message: "User created!" });
 }
