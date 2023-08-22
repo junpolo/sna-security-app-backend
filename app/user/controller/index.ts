@@ -1,11 +1,19 @@
 import { Express, Router, Request, Response } from "express";
 
-import { IUser } from "../interfaces/user.interface";
+import { User } from "../interfaces/user.interface";
 
-const MOCK_USERS: Array<IUser> = [
-  { id: 1, name: "Ahmed Singh" },
-  { id: 2, name: "Khadaffy Janjalani" },
-  { id: 3, name: "Mohammed Flengs" },
+const MOCK_USERS: Array<User> = [
+  { id: 1, email: "ahmed@domain.com", password: "123" },
+  {
+    id: 2,
+    email: "khadaffy@domain.com",
+    password: "123",
+  },
+  {
+    id: 3,
+    email: "flengs@domain.com",
+    password: "123",
+  },
 ];
 
 export function getUsers(request: Request, response: Response) {
