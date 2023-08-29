@@ -4,9 +4,6 @@ export interface User {
   password: string;
 }
 
-export interface UserAuthentication {
-  email: string;
-  password: string;
-}
+export interface UserAuthentication extends Omit<User, "id"> {}
 
 export interface CreateUserPayload extends Omit<User, "id"> {}

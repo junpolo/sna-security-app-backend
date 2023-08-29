@@ -1,8 +1,13 @@
 import { Express, Router, Request, Response } from "express";
 
-import { User, CreateUserPayload } from "../interfaces/user.interface";
+import {
+  User,
+  CreateUserPayload,
+  UserAuthentication,
+} from "../interfaces/user.interface";
 import { createUser } from "../../data/data-access";
 import { validateSignup } from "../validations/auth.validation";
+import { getUser } from "../../data/data-access";
 
 const MOCK_USERS: Array<User> = [
   { id: 1, email: "ahmed@domain.com", password: "123" },
@@ -31,7 +36,7 @@ export function getUserById(request: Request, response: Response) {
 export function registerUser(request: Request, response: Response) {
   const { email, password } = request.body as CreateUserPayload;
 
-  const userData: Omit<User, "id"> = {
+  const userData: CreateUserPayload = {
     email,
     password,
   };
@@ -46,5 +51,12 @@ export function registerUser(request: Request, response: Response) {
 }
 
 export function login(request: Request, response: Response) {
-  return response.json({ message: "User logged in!" });
+  const { email } = request.body as UserAuthentication;
+
+  const user = getUser(email);
+
+  if (!user)
+    return response.status(403).send({ message: "Invalid Credentials" });
+
+  return response.json({ message: "Login Success" });
 }

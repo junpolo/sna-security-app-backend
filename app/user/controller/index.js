@@ -14,6 +14,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.login = exports.registerUser = exports.getUserById = exports.getUsers = void 0;
 var data_access_1 = require("../../data/data-access");
 var auth_validation_1 = require("../validations/auth.validation");
+var data_access_2 = require("../../data/data-access");
 var MOCK_USERS = [
     { id: 1, email: "ahmed@domain.com", password: "123" },
     {
@@ -52,6 +53,10 @@ function registerUser(request, response) {
 }
 exports.registerUser = registerUser;
 function login(request, response) {
-    return response.json({ message: "User logged in!" });
+    var _a = request.body, email = _a.email, password = _a.password;
+    var user = (0, data_access_2.getUser)(email);
+    if (!user)
+        return response.status(403).send({ message: "Invalid Credentials" });
+    return response.json({ message: "Login Success" });
 }
 exports.login = login;
