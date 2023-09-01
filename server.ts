@@ -2,6 +2,7 @@ require("dotenv").config();
 import * as express from "express";
 import { Express, Router, Request, Response } from "express";
 import * as bodyParser from "body-parser";
+import { expressjwt } from "express-jwt";
 
 import {
   getUsers,
@@ -11,6 +12,12 @@ import {
 } from "./app/user/controller";
 
 const app: Express = express();
+
+const jwtCheckMiddleware = expressjwt({
+  secret: process.env["SECRET"],
+  algorithms: ["HS256"],
+});
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -23,8 +30,8 @@ router.post("/register", registerUser);
 router.post("/login", login);
 
 // GET
-router.get("/users", getUsers);
-router.get("/users/:id", getUserById);
+router.get("/users", jwtCheckMiddleware, getUsers);
+router.get("/users/:id", jwtCheckMiddleware, getUserById);
 
 app.use("/api", router);
 
