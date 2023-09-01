@@ -16,6 +16,7 @@ var data_access_1 = require("../../data/data-access");
 var auth_validation_1 = require("../validations/auth.validation");
 var data_access_2 = require("../../data/data-access");
 var utils_1 = require("../../shared/utils");
+var jwt_decode_1 = require("jwt-decode");
 var MOCK_USERS = [
     { id: 1, email: "ahmed@domain.com", password: "123" },
     {
@@ -60,6 +61,11 @@ function login(request, response) {
     if (!user || !(0, utils_1.verifyPassword)(password, user.password))
         return response.status(403).send({ message: "Invalid Credentials" });
     var accessToken = (0, utils_1.createToken)(user);
-    return response.json({ message: "Login Success", accessToken: accessToken });
+    var decodedJwt = (0, jwt_decode_1.default)(accessToken);
+    return response.json({
+        message: "Login Success",
+        accessToken: accessToken,
+        expires: decodedJwt.exp,
+    });
 }
 exports.login = login;

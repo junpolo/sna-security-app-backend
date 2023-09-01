@@ -9,6 +9,7 @@ import { createUser } from "../../data/data-access";
 import { validateSignup } from "../validations/auth.validation";
 import { getUser } from "../../data/data-access";
 import { createToken, hashPassword, verifyPassword } from "../../shared/utils";
+import jwtDecode from "jwt-decode";
 
 const MOCK_USERS: Array<User> = [
   { id: 1, email: "ahmed@domain.com", password: "123" },
@@ -61,5 +62,11 @@ export function login(request: Request, response: Response) {
     return response.status(403).send({ message: "Invalid Credentials" });
 
   const accessToken = createToken(user);
-  return response.json({ message: "Login Success", accessToken });
+  const decodedJwt = jwtDecode<{ exp: string }>(accessToken);
+
+  return response.json({
+    message: "Login Success",
+    accessToken,
+    expires: decodedJwt.exp,
+  });
 }
