@@ -8,6 +8,7 @@ import {
 import { createUser } from "../../data/data-access";
 import { validateSignup } from "../validations/auth.validation";
 import { getUser } from "../../data/data-access";
+import { hashPassword, verifyPassword } from "../../shared/utils";
 
 const MOCK_USERS: Array<User> = [
   { id: 1, email: "ahmed@domain.com", password: "123" },
@@ -36,9 +37,10 @@ export function getUserById(request: Request, response: Response) {
 export function registerUser(request: Request, response: Response) {
   const { email, password } = request.body as CreateUserPayload;
 
+  const hashedPassword = hashPassword(password);
   const userData: CreateUserPayload = {
     email,
-    password,
+    password: hashedPassword,
   };
 
   const validationStatus = validateSignup(userData);
@@ -51,11 +53,11 @@ export function registerUser(request: Request, response: Response) {
 }
 
 export function login(request: Request, response: Response) {
-  const { email } = request.body as UserAuthentication;
+  const { email, password } = request.body as UserAuthentication;
 
   const user = getUser(email);
 
-  if (!user)
+  if (!user || !verifyPassword(password, user.password))
     return response.status(403).send({ message: "Invalid Credentials" });
 
   return response.json({ message: "Login Success" });

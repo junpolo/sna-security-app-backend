@@ -15,6 +15,7 @@ exports.login = exports.registerUser = exports.getUserById = exports.getUsers = 
 var data_access_1 = require("../../data/data-access");
 var auth_validation_1 = require("../validations/auth.validation");
 var data_access_2 = require("../../data/data-access");
+var utils_1 = require("../../shared/utils");
 var MOCK_USERS = [
     { id: 1, email: "ahmed@domain.com", password: "123" },
     {
@@ -40,9 +41,10 @@ function getUserById(request, response) {
 exports.getUserById = getUserById;
 function registerUser(request, response) {
     var _a = request.body, email = _a.email, password = _a.password;
+    var hashedPassword = (0, utils_1.hashPassword)(password);
     var userData = {
         email: email,
-        password: password,
+        password: hashedPassword,
     };
     var validationStatus = (0, auth_validation_1.validateSignup)(userData);
     if (validationStatus !== true) {
@@ -55,7 +57,7 @@ exports.registerUser = registerUser;
 function login(request, response) {
     var _a = request.body, email = _a.email, password = _a.password;
     var user = (0, data_access_2.getUser)(email);
-    if (!user)
+    if (!user || !(0, utils_1.verifyPassword)(password, user.password))
         return response.status(403).send({ message: "Invalid Credentials" });
     return response.json({ message: "Login Success" });
 }
