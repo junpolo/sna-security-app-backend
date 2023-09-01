@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+require("dotenv").config();
 var express = require("express");
 var bodyParser = require("body-parser");
 var controller_1 = require("./app/user/controller");

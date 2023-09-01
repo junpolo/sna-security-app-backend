@@ -59,6 +59,7 @@ function login(request, response) {
     var user = (0, data_access_2.getUser)(email);
     if (!user || !(0, utils_1.verifyPassword)(password, user.password))
         return response.status(403).send({ message: "Invalid Credentials" });
-    return response.json({ message: "Login Success" });
+    var accessToken = (0, utils_1.createToken)(user);
+    return response.json({ message: "Login Success", accessToken: accessToken });
 }
 exports.login = login;

@@ -8,7 +8,7 @@ import {
 import { createUser } from "../../data/data-access";
 import { validateSignup } from "../validations/auth.validation";
 import { getUser } from "../../data/data-access";
-import { hashPassword, verifyPassword } from "../../shared/utils";
+import { createToken, hashPassword, verifyPassword } from "../../shared/utils";
 
 const MOCK_USERS: Array<User> = [
   { id: 1, email: "ahmed@domain.com", password: "123" },
@@ -60,5 +60,6 @@ export function login(request: Request, response: Response) {
   if (!user || !verifyPassword(password, user.password))
     return response.status(403).send({ message: "Invalid Credentials" });
 
-  return response.json({ message: "Login Success" });
+  const accessToken = createToken(user);
+  return response.json({ message: "Login Success", accessToken });
 }
